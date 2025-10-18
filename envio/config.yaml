@@ -2,6 +2,7 @@ name: metamask-monad-indexer
 networks:
   - id: 10143
     rpc: https://testnet-rpc.monad.xyz
+    start_block: 0
 contracts:
   - name: MonUSDC
     address: 0x3A13C20987Ac0e6840d9CB6e917085F72D17E698
