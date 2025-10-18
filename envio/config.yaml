@@ -3,6 +3,7 @@ description: MetaMask Smart Accounts indexer for Monad testnet
 version: "1.0.0"
 ecosystem: evm
 schema: schema.graphql
+preload_handlers: true
 
 networks:
   - id: 10143
