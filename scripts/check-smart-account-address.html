@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Check Smart Account Address</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h1>🔍 Check Smart Account Address</h1>
+  <button id="checkBtn">Check My Smart Account</button>
+  <div id="result" style="margin-top: 20px; padding: 20px; background: #f0f0f0; border-radius: 8px;"></div>
+
+  <script type="module">
+    import { toMetaMaskSmartAccount } from 'https://esm.sh/@metamask/delegation-toolkit@0.13.0';
+    import { createWalletClient, custom } from 'https://esm.sh/viem@2.37.8';
+
+    const monadTestnet = {
+      id: 10143,
+      name: "Monad Testnet",
+      network: "monad-testnet",
+      nativeCurrency: { name: "MON", symbol: "MON", decimals: 18 },
+      rpcUrls: { 
+        default: { 
+          http: ["https://rpc.monad-testnet.fastlane.xyz/eyJhIjoiMHhhZkRCOWVFMTMxOEFFYUFhMkVlM0U3YTA4NTAyMDAyODc1RjA0MkNBIiwidCI6MTc2MDE4NjEyNSwicyI6IjB4ODAyODYxNGU1OWNhYmUzN2RlZTI2OGNhNzU2YTkyODJiZmNkY2U1OWZlYWJjYTc1MWY2NGI0YWI0ZDZlODUyNzQyYzcyZThmNmQxNDZkNjJkZDk3M2MxZTY5MWZiY2ZmOGMxZDc0NGM2ODg5NTQ3ODZkYmMwOGJmNTlkZjU4OGIxYyJ9"] 
+        } 
+      }
+    };
+
+    document.getElementById('checkBtn').addEventListener('click', async () => {
+      const resultDiv = document.getElementById('result');
+      
+      try {
+        resultDiv.innerHTML = '⏳ Connecting to MetaMask...';
+        
+        if (!window.ethereum) {
+          throw new Error('MetaMask not installed');
+        }
+        
+        // Request accounts
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        
+        // Get EOA address
+        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+        const eoaAddress = accounts[0];
+        
+        resultDiv.innerHTML = `⏳ EOA: ${eoaAddress}<br>Computing Smart Account...`;
+        
+        // Create wallet client
+        const walletClient = createWalletClient({
+          account: eoaAddress,
+          transport: custom(window.ethereum),
+          chain: monadTestnet,
+        });
+        
+        // Get Smart Account
+        const smartAccount = await toMetaMaskSmartAccount({
+          client: walletClient,
+          type: 'MultiSig',
+        });
+        
+        resultDiv.innerHTML = `
+          <h2>✅ Results:</h2>
+          <p><strong>EOA Address:</strong><br>${eoaAddress}</p>
+          <p><strong>Smart Account Address:</strong><br><span style="color: red; font-size: 18px; font-weight: bold;">${smartAccount.address}</span></p>
+          <p><strong>Check on Explorer:</strong><br>
+            <a href="https://explorer.monad.xyz/address/${smartAccount.address}" target="_blank">
+              ${smartAccount.address}
+            </a>
+          </p>
+          <hr>
+          <p style="background: #fff3cd; padding: 12px; border-radius: 4px;">
+            <strong>⚠️ IMPORTANT:</strong><br>
+            Khi tạo delegation, phải dùng <strong>Smart Account Address</strong> (${smartAccount.address}),<br>
+            KHÔNG PHẢI EOA address (${eoaAddress})!
+          </p>
+        `;
+        
+      } catch (error) {
+        resultDiv.innerHTML = `<p style="color: red;">❌ Error: ${error.message}</p>`;
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>
+
+

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "delegation_example_1",
+    "delegator": "0x1bd5aCb8069DA1051911eB80A37723aA1ce5919C",
+    "delegate": "0xa51DbFfE49FA6Fe3fC873094e47184aE624cd76f",
+    "authority": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "caveats": [
+      {
+        "type": "erc20PeriodTransfer",
+        "tokenAddress": "0x3A13C20987Ac0e6840d9CB6e917085F72D17E698",
+        "periodAmount": "10000000",
+        "periodDuration": 604800,
+        "startDate": 1234567890
+      }
+    ],
+    "salt": "0x",
+    "signature": "0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890",
+    "status": "ACTIVE",
+    "createdAt": "2024-01-01T00:00:00.000Z"
+  }
+]
+

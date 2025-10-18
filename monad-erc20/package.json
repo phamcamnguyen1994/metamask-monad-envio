@@ -1,0 +1,22 @@
+{
+  "name": "monad-erc20",
+  "version": "1.0.0",
+  "description": "ERC-20 test token for Monad testnet",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "compile": "hardhat compile",
+    "deploy": "hardhat run scripts/deploy.js --network monad",
+    "test": "hardhat test"
+  },
+  "devDependencies": {
+    "hardhat": "^2.22.0",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "dotenv": "^16.4.5",
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.0"
+  }
+}

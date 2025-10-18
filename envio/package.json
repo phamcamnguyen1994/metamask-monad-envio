@@ -1,0 +1,17 @@
+{
+  "name": "metamask-monad-indexer",
+  "version": "1.0.0",
+  "description": "MetaMask Smart Accounts indexer for Monad testnet",
+  "main": "index.js",
+  "scripts": {
+    "dev": "pnpm envio dev",
+    "build": "pnpm envio build",
+    "deploy": "pnpm envio deploy"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-ts": "^0.31.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

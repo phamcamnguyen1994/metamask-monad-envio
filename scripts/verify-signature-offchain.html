@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Verify Delegation Signature Off-chain</title>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: monospace; padding: 20px; max-width: 900px; margin: 0 auto; }
+    button { padding: 10px 20px; margin: 10px 0; cursor: pointer; }
+    pre { background: #f4f4f4; padding: 15px; border-radius: 8px; overflow-x: auto; }
+    .error { color: red; }
+    .success { color: green; }
+    .warning { color: orange; }
+  </style>
+</head>
+<body>
+  <h1>🔐 Verify Delegation Signature Off-chain</h1>
+  
+  <button onclick="verifySignature()">Verify Latest Delegation Signature</button>
+  
+  <div id="result"></div>
+
+  <script type="module">
+    import { verifyTypedData, getAddress } from 'https://esm.sh/viem@2.37.8';
+    
+    window.verifySignature = async function() {
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = '<p>⏳ Verifying signature...</p>';
+      
+      try {
+        // Get delegation from localStorage
+        const delegations = JSON.parse(localStorage.getItem('delegations') || '[]');
+        
+        if (delegations.length === 0) {
+          throw new Error('No delegations found in localStorage!');
+        }
+        
+        const delegation = delegations[delegations.length - 1]; // Latest
+        
+        console.log('Delegation:', delegation);
+        
+        // EIP-712 Domain for DelegationManager on Monad
+        const domain = {
+          name: 'DelegationManager',
+          version: '1',
+          chainId: 10143,
+          verifyingContract: '0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3',
+        };
+        
+        // EIP-712 Types for Delegation
+        const types = {
+          Delegation: [
+            { name: 'delegate', type: 'address' },
+            { name: 'delegator', type: 'address' },
+            { name: 'authority', type: 'bytes32' },
+            { name: 'caveats', type: 'Caveat[]' },
+            { name: 'salt', type: 'bytes32' },
+          ],
+          Caveat: [
+            { name: 'enforcer', type: 'address' },
+            { name: 'terms', type: 'bytes' },
+            { name: 'args', type: 'bytes' },
+          ],
+        };
+        
+        // Prepare message (remove signature and metadata)
+        const message = {
+          delegate: getAddress(delegation.delegate),
+          delegator: getAddress(delegation.delegator),
+          authority: delegation.authority,
+          caveats: delegation.caveats.map(c => ({
+            enforcer: getAddress(c.enforcer),
+            terms: c.terms || '0x',
+            args: c.args || '0x',
+          })),
+          salt: delegation.salt,
+        };
+        
+        console.log('Domain:', domain);
+        console.log('Message:', message);
+        console.log('Signature:', delegation.signature);
+        
+        // Verify signature
+        const recoveredAddress = await verifyTypedData({
+          address: delegation.delegator,
+          domain,
+          types,
+          primaryType: 'Delegation',
+          message,
+          signature: delegation.signature,
+        });
+        
+        console.log('Recovered address:', recoveredAddress);
+        
+        let html = '<h2 class="success">✅ Verification Results:</h2>';
+        html += '<pre>';
+        html += `Delegator: ${delegation.delegator}\n`;
+        html += `Signature: ${delegation.signature}\n`;
+        html += `Domain:\n  name: ${domain.name}\n  version: ${domain.version}\n  chainId: ${domain.chainId}\n  verifyingContract: ${domain.verifyingContract}\n\n`;
+        html += `<span class="success">✅ Signature is VALID!</span>\n\n`;
+        html += `This means:\n`;
+        html += `1. ✅ Signature was signed by delegator\n`;
+        html += `2. ✅ Domain (chainId, verifyingContract) is correct\n`;
+        html += `3. ✅ Delegation data has not been modified\n\n`;
+        html += `If transaction still reverts, check:\n`;
+        html += `- Caveat terms encoding\n`;
+        html += `- Token balance\n`;
+        html += `- Period limits\n`;
+        html += '</pre>';
+        
+        resultDiv.innerHTML = html;
+        
+      } catch (error) {
+        console.error('Verification error:', error);
+        
+        let html = '<h2 class="error">❌ Verification FAILED:</h2>';
+        html += '<pre class="error">';
+        html += error.message + '\n\n';
+        
+        if (error.message.includes('signature')) {
+          html += `Possible causes:\n`;
+          html += `1. ❌ Signature was signed with wrong domain\n`;
+          html += `2. ❌ Delegation data was modified after signing\n`;
+          html += `3. ❌ Signer is not the delegator\n\n`;
+          html += `Solution: Create NEW delegation with correct signing!\n`;
+        }
+        
+        html += '</pre>';
+        
+        resultDiv.innerHTML = html;
+      }
+    };
+  </script>
+</body>
+</html>
+
+

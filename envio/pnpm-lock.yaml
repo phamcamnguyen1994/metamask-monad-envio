@@ -1,0 +1,55 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      '@graphprotocol/graph-ts':
+        specifier: ^0.31.0
+        version: 0.31.0
+    devDependencies:
+      typescript:
+        specifier: ^5.0.0
+        version: 5.9.2
+
+packages:
+
+  '@graphprotocol/graph-ts@0.31.0':
+    resolution: {integrity: sha512-xreRVM6ho2BtolyOh2flDkNoGZximybnzUnF53zJVp0+Ed0KnAlO1/KOCUYw06euVI9tk0c9nA2Z/D5SIQV2Rg==}
+
+  assemblyscript@0.19.10:
+    resolution: {integrity: sha512-HavcUBXB3mBTRGJcpvaQjmnmaqKHBGREjSPNsIvnAk2f9dj78y4BkMaSSdvBQYWcDDzsHQjyUC8stICFkD1Odg==}
+    hasBin: true
+
+  binaryen@101.0.0-nightly.20210723:
+    resolution: {integrity: sha512-eioJNqhHlkguVSbblHOtLqlhtC882SOEPKmNFZaDuz1hzQjolxZ+eu3/kaS10n3sGPONsIZsO7R9fR00UyhEUA==}
+    hasBin: true
+
+  long@4.0.0:
+    resolution: {integrity: sha512-XsP+KhQif4bjX1kbuSiySJFNAehNxgLb6hPRGJ9QsUr8ajHkuXGdrHmFUTUUXhDwVX2R5bY4JNZEwbUiMhV+MA==}
+
+  typescript@5.9.2:
+    resolution: {integrity: sha512-CWBzXQrc/qOkhidw1OzBTQuYRbfyxDXJMVJ1XNwUHGROVmuaeiEm3OslpZ1RV96d7SKKjZKrSJu3+t/xlw3R9A==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+snapshots:
+
+  '@graphprotocol/graph-ts@0.31.0':
+    dependencies:
+      assemblyscript: 0.19.10
+
+  assemblyscript@0.19.10:
+    dependencies:
+      binaryen: 101.0.0-nightly.20210723
+      long: 4.0.0
+
+  binaryen@101.0.0-nightly.20210723: {}
+
+  long@4.0.0: {}
+
+  typescript@5.9.2: {}

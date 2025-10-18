@@ -1,0 +1,18 @@
+# Exclude Hardhat project
+monad-erc20/
+
+# Exclude Envio indexer (will be deployed separately)
+envio/
+
+# Exclude contracts and scripts
+contracts/
+scripts/
+tests/
+
+# Exclude development files
+*.log
+*.md
+!README.md
+
+# Exclude node_modules in subdirectories
+**/node_modules/
