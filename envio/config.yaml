@@ -1,14 +1,17 @@
 name: metamask-monad-indexer
 description: MetaMask Smart Accounts indexer for Monad testnet
+schema: schema.graphql
 preload_handlers: true
 
 contracts:
   - name: MonUSDC
+    abi: abis/MonUSDC.json
     handler: src/EventHandlers.ts
     events:
       - event: Transfer(address indexed from, address indexed to, uint256 value)
   
   - name: DelegationManager
+    abi: abis/DelegationManager.json
     handler: src/EventHandlers.ts
     events:
       - event: RedeemedDelegation(address indexed rootDelegator, address indexed redeemer, (address,address,bytes32,(address,bytes,bytes)[],uint256,bytes) delegation)
