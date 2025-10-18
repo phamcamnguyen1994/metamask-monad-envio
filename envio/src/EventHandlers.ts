@@ -7,7 +7,6 @@ import {
   DelegationManager,
   DelegationManager_EnabledDelegation,
   DelegationManager_RedeemedDelegation,
-  DelegationManager_DisabledDelegation,
 } from "generated";
 
 // Handler for mUSDC Transfer events
@@ -64,7 +63,7 @@ DelegationManager.DisabledDelegation.handler(async ({ event, context }) => {
   const existingDelegation = await context.Delegation.get(delegationId);
   
   if (existingDelegation) {
-    const updatedEntity: DelegationManager_DisabledDelegation = {
+    const updatedEntity: DelegationManager_EnabledDelegation = {
       ...existingDelegation,
       status: "DISABLED",
     };
