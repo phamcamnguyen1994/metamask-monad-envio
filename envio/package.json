@@ -6,13 +6,13 @@
   "scripts": {
     "dev": "envio dev",
     "build": "envio build",
-    "deploy": "envio deploy",
-    "codegen": "envio codegen"
+    "deploy": "envio deploy"
   },
   "dependencies": {
-    "envio": "latest"
+    "@graphprotocol/graph-ts": "^0.31.0"
   },
   "devDependencies": {
+    "envio": "^2.30.1",
     "typescript": "^5.0.0"
   }
 }
