@@ -1,27 +1,14 @@
 name: metamask-monad-indexer
-description: MetaMask Smart Accounts indexer for Monad testnet
-schema: schema.graphql
-preload_handlers: true
-
-contracts:
-  - name: MonUSDC
-    handler: src/EventHandlers.ts
-    events:
-      - event: Transfer(address indexed from, address indexed to, uint256 value)
-  
-  - name: DelegationManager
-    handler: src/EventHandlers.ts
-    events:
-      - event: RedeemedDelegation(address indexed rootDelegator, address indexed redeemer, (address,address,bytes32,(address,bytes,bytes)[],uint256,bytes) delegation)
-      - event: EnabledDelegation(bytes32 indexed delegationHash, address indexed delegator, address indexed delegate)
-
+language: typescript
 networks:
   - id: 10143
+    name: monad-testnet
+    rpc_url: https://testnet-rpc.monad.xyz
+contracts:
+  - name: MonUSDC
+    address: 0x3A13C20987Ac0e6840d9CB6e917085F72D17E698
     start_block: 0
-    rpc: https://testnet-rpc.monad.xyz
-    contracts:
-      - name: MonUSDC
-        address: 0x3A13C20987Ac0e6840d9CB6e917085F72D17E698
-      
-      - name: DelegationManager
-        address: 0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3
+  
+  - name: DelegationManager
+    address: 0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3
+    start_block: 0
