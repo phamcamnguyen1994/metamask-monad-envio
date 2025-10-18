@@ -1,4 +1,5 @@
 name: metamask-monad-delegation
+version: "1.0.0"
 description: Index mUSDC transfers and delegation events on Monad testnet
 ecosystem: evm
 schema: schema.graphql
