@@ -201,6 +201,54 @@ npm run build
 npm run start
 ```
 
+## 📊 Envio Indexer Setup (Optional)
+
+For real-time blockchain indexing with Envio HyperIndex, follow these steps:
+
+### Quick Setup
+
+1. **Install Envio CLI**
+   ```bash
+   npm install -g envio
+   ```
+
+2. **Generate indexer code**
+   ```bash
+   cd envio
+   envio codegen
+   ```
+
+3. **Run locally (for testing)**
+   ```bash
+   envio dev
+   # GraphQL playground: http://localhost:8080/v1/graphql
+   ```
+
+4. **Deploy to Envio Cloud**
+   - Push code to GitHub
+   - Connect on https://envio.dev/app
+   - Deploy indexer from your repository
+   - Get GraphQL endpoint URL
+
+5. **Update environment variables**
+   ```env
+   NEXT_PUBLIC_ENVIO_GRAPHQL=https://indexer.dev.hyperindex.xyz/<YOUR_ID>/v1/graphql
+   ```
+
+### Detailed Guide
+
+See [envio/ENVIO_SETUP.md](envio/ENVIO_SETUP.md) for comprehensive setup instructions including:
+- Contract address configuration
+- Event handler implementation
+- DelegationManager integration
+- Troubleshooting tips
+
+### Current Status
+
+- ✅ **mUSDC Transfer events**: Configured and ready
+- 🔄 **DelegationManager events**: In development (requires ABI)
+- ✅ **LocalStorage fallback**: Dashboard works without Envio
+
 ## 🧪 Testing
 
 ### Manual Testing
