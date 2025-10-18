@@ -19,12 +19,3 @@ type Delegation @entity {
   status: String!
 }
 
-type Redemption @entity {
-  id: ID!
-  delegator: String!
-  redeemer: String!
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: String!
-}
-

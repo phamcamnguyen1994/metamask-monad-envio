@@ -6,7 +6,6 @@ import {
   MonUSDC_Transfer,
   DelegationManager,
   DelegationManager_EnabledDelegation,
-  DelegationManager_RedeemedDelegation,
 } from "generated";
 
 // Handler for mUSDC Transfer events
@@ -40,35 +39,6 @@ DelegationManager.EnabledDelegation.handler(async ({ event, context }) => {
   context.Delegation.set(entity);
 });
 
-// Handler for DelegationManager RedeemedDelegation events
-DelegationManager.RedeemedDelegation.handler(async ({ event, context }) => {
-  const entity: DelegationManager_RedeemedDelegation = {
-    id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-    delegator: event.params.rootDelegator,
-    redeemer: event.params.redeemer,
-    blockNumber: BigInt(event.block.number),
-    blockTimestamp: BigInt(event.block.timestamp),
-    transactionHash: event.transaction.hash,
-  };
-
-  context.Redemption.set(entity);
-});
-
-// Handler for DelegationManager DisabledDelegation events
-DelegationManager.DisabledDelegation.handler(async ({ event, context }) => {
-  // Update delegation status to DISABLED
-  const delegationId = event.params.delegationHash;
-  
-  // Load existing delegation if it exists
-  const existingDelegation = await context.Delegation.get(delegationId);
-  
-  if (existingDelegation) {
-    const updatedEntity: DelegationManager_EnabledDelegation = {
-      ...existingDelegation,
-      status: "DISABLED",
-    };
-    
-    context.Delegation.set(updatedEntity);
-  }
-});
+// Note: RedeemedDelegation and DisabledDelegation handlers removed
+// to simplify config and avoid complex struct parsing issues
 
