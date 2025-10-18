@@ -1,9 +1,24 @@
+# yaml-language: $schema=./node_modules/envio/evm.schema.json
 name: metamask-monad-indexer
 description: MetaMask Smart Accounts indexer for Monad testnet
-version: "1.0.0"
 ecosystem: evm
 schema: schema.graphql
 preload_handlers: true
+
+contracts:
+  - name: MonUSDC
+    abi_file_path: ./abis/MonUSDC.json
+    handler: src/EventHandlers.ts
+    events:
+      - event: "Transfer(address indexed from, address indexed to, uint256 value)"
+  
+  - name: DelegationManager
+    abi_file_path: ./abis/DelegationManager.json
+    handler: src/EventHandlers.ts
+    events:
+      - event: "EnabledDelegation(bytes32 indexed delegationHash, address indexed delegator, address indexed delegate, tuple delegation)"
+      - event: "RedeemedDelegation(address indexed rootDelegator, address indexed redeemer, tuple delegation)"
+      - event: "DisabledDelegation(bytes32 indexed delegationHash, address indexed delegator, address indexed delegate, tuple delegation)"
 
 networks:
   - id: 10143
@@ -11,17 +26,7 @@ networks:
     rpc: https://rpc.ankr.com/monad_testnet
     contracts:
       - name: MonUSDC
-        abi_file_path: ./abis/MonUSDC.json
-        handler: src/EventHandlers.ts
         address: 0x3A13C20987Ac0e6840d9CB6e917085F72D17E698
-        events:
-          - event: Transfer(address indexed from, address indexed to, uint256 value)
-
+      
       - name: DelegationManager
-        abi_file_path: ./abis/DelegationManager.json
-        handler: src/EventHandlers.ts
         address: 0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3
-        events:
-          - event: EnabledDelegation(bytes32 indexed delegationHash, address indexed delegator, address indexed delegate, tuple delegation)
-          - event: RedeemedDelegation(address indexed rootDelegator, address indexed redeemer, tuple delegation)
-          - event: DisabledDelegation(bytes32 indexed delegationHash, address indexed delegator, address indexed delegate, tuple delegation)
