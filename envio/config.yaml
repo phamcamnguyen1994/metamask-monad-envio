@@ -3,11 +3,11 @@ networks:
   - id: 10143
     rpc: https://testnet-rpc.monad.xyz
     start_block: 0
-contracts:
-  - name: MonUSDC
-    address: 0x3A13C20987Ac0e6840d9CB6e917085F72D17E698
-    start_block: 0
-  
-  - name: DelegationManager
-    address: 0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3
-    start_block: 0
+    contracts:
+      - name: MonUSDC
+        address: 0x3A13C20987Ac0e6840d9CB6e917085F72D17E698
+        start_block: 0
+      
+      - name: DelegationManager
+        address: 0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3
+        start_block: 0
