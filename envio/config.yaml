@@ -1,5 +1,4 @@
 name: metamask-monad-indexer
-language: typescript
 networks:
   - id: 10143
     name: monad-testnet
