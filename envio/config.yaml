@@ -8,6 +8,7 @@ contracts:
   - name: DelegationManager
     handler: src/EventHandlers.ts
     events:
+      - event: RedeemedDelegation(address indexed rootDelegator, address indexed redeemer, (address,address,bytes32,(address,bytes,bytes)[],uint256,bytes) delegation)
       - event: EnabledDelegation(bytes32 indexed delegationHash, address indexed delegator, address indexed delegate)
 
 networks:
