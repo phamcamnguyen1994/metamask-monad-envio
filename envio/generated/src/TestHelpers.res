@@ -143,52 +143,6 @@ module EventFunctions = {
 
 
 module DelegationManager = {
-  module EnabledDelegation = {
-    @genType
-    let processEvent: EventFunctions.eventProcessor<Types.DelegationManager.EnabledDelegation.event> = EventFunctions.makeEventProcessor(
-      ~register=(Types.DelegationManager.EnabledDelegation.register :> unit => Internal.eventConfig),
-    )
-
-    @genType
-    type createMockArgs = {
-      @as("delegationHash")
-      delegationHash?: string,
-      @as("delegator")
-      delegator?: Address.t,
-      @as("delegate")
-      delegate?: Address.t,
-      @as("delegation")
-      delegation?: (),
-      mockEventData?: EventFunctions.mockEventData,
-    }
-
-    @genType
-    let createMockEvent = args => {
-      let {
-        ?delegationHash,
-        ?delegator,
-        ?delegate,
-        ?delegation,
-        ?mockEventData,
-      } = args
-
-      let params = 
-      {
-       delegationHash: delegationHash->Belt.Option.getWithDefault("foo"),
-       delegator: delegator->Belt.Option.getWithDefault(TestHelpers_MockAddresses.defaultAddress),
-       delegate: delegate->Belt.Option.getWithDefault(TestHelpers_MockAddresses.defaultAddress),
-       delegation: delegation->Belt.Option.getWithDefault(()),
-      }
-->(Utils.magic: Types.DelegationManager.EnabledDelegation.eventArgs => Internal.eventParams)
-
-      EventFunctions.makeEventMocker(
-        ~params,
-        ~mockEventData,
-        ~register=(Types.DelegationManager.EnabledDelegation.register :> unit => Internal.eventConfig),
-      )->(Utils.magic: Internal.event => Types.DelegationManager.EnabledDelegation.event)
-    }
-  }
-
   module RedeemedDelegation = {
     @genType
     let processEvent: EventFunctions.eventProcessor<Types.DelegationManager.RedeemedDelegation.event> = EventFunctions.makeEventProcessor(
@@ -202,7 +156,7 @@ module DelegationManager = {
       @as("redeemer")
       redeemer?: Address.t,
       @as("delegation")
-      delegation?: (),
+      delegation?: (Address.t, Address.t, string, array<(Address.t, string, string)>, bigint, string),
       mockEventData?: EventFunctions.mockEventData,
     }
 
@@ -219,7 +173,7 @@ module DelegationManager = {
       {
        rootDelegator: rootDelegator->Belt.Option.getWithDefault(TestHelpers_MockAddresses.defaultAddress),
        redeemer: redeemer->Belt.Option.getWithDefault(TestHelpers_MockAddresses.defaultAddress),
-       delegation: delegation->Belt.Option.getWithDefault(()),
+       delegation: delegation->Belt.Option.getWithDefault((TestHelpers_MockAddresses.defaultAddress, TestHelpers_MockAddresses.defaultAddress, "foo", [], 0n, "foo")),
       }
 ->(Utils.magic: Types.DelegationManager.RedeemedDelegation.eventArgs => Internal.eventParams)
 
@@ -231,10 +185,10 @@ module DelegationManager = {
     }
   }
 
-  module DisabledDelegation = {
+  module EnabledDelegation = {
     @genType
-    let processEvent: EventFunctions.eventProcessor<Types.DelegationManager.DisabledDelegation.event> = EventFunctions.makeEventProcessor(
-      ~register=(Types.DelegationManager.DisabledDelegation.register :> unit => Internal.eventConfig),
+    let processEvent: EventFunctions.eventProcessor<Types.DelegationManager.EnabledDelegation.event> = EventFunctions.makeEventProcessor(
+      ~register=(Types.DelegationManager.EnabledDelegation.register :> unit => Internal.eventConfig),
     )
 
     @genType
@@ -245,8 +199,6 @@ module DelegationManager = {
       delegator?: Address.t,
       @as("delegate")
       delegate?: Address.t,
-      @as("delegation")
-      delegation?: (),
       mockEventData?: EventFunctions.mockEventData,
     }
 
@@ -256,7 +208,6 @@ module DelegationManager = {
         ?delegationHash,
         ?delegator,
         ?delegate,
-        ?delegation,
         ?mockEventData,
       } = args
 
@@ -265,15 +216,14 @@ module DelegationManager = {
        delegationHash: delegationHash->Belt.Option.getWithDefault("foo"),
        delegator: delegator->Belt.Option.getWithDefault(TestHelpers_MockAddresses.defaultAddress),
        delegate: delegate->Belt.Option.getWithDefault(TestHelpers_MockAddresses.defaultAddress),
-       delegation: delegation->Belt.Option.getWithDefault(()),
       }
-->(Utils.magic: Types.DelegationManager.DisabledDelegation.eventArgs => Internal.eventParams)
+->(Utils.magic: Types.DelegationManager.EnabledDelegation.eventArgs => Internal.eventParams)
 
       EventFunctions.makeEventMocker(
         ~params,
         ~mockEventData,
-        ~register=(Types.DelegationManager.DisabledDelegation.register :> unit => Internal.eventConfig),
-      )->(Utils.magic: Internal.event => Types.DelegationManager.DisabledDelegation.event)
+        ~register=(Types.DelegationManager.EnabledDelegation.register :> unit => Internal.eventConfig),
+      )->(Utils.magic: Internal.event => Types.DelegationManager.EnabledDelegation.event)
     }
   }
 

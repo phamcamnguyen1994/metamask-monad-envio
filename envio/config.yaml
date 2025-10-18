@@ -16,13 +16,10 @@ contracts:
 
 networks:
   - id: 10143
-    start_block: 39158500
-    rpc: https://rpc.ankr.com/monad_testnet
+    start_block: 0
     contracts:
       - name: MonUSDC
         address: 0x3A13C20987Ac0e6840d9CB6e917085F72D17E698
-        start_block: 39158500
-      
-      - name: DelegationManager
+        start_block: 0
         address: 0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3
-        start_block: 39158500
+        start_block: 0

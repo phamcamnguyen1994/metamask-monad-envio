@@ -37,7 +37,7 @@ let registerContractHandlers = (
             events: [
               (Types.MonUSDC.Transfer.register() :> Internal.eventConfig),
             ],
-            startBlock: None,
+            startBlock: Some(39158500),
           },
           {
             InternalConfig.name: "DelegationManager",
@@ -47,20 +47,19 @@ let registerContractHandlers = (
 ,
             ],
             events: [
-              (Types.DelegationManager.EnabledDelegation.register() :> Internal.eventConfig),
               (Types.DelegationManager.RedeemedDelegation.register() :> Internal.eventConfig),
-              (Types.DelegationManager.DisabledDelegation.register() :> Internal.eventConfig),
+              (Types.DelegationManager.EnabledDelegation.register() :> Internal.eventConfig),
             ],
-            startBlock: None,
+            startBlock: Some(39158500),
           },
         ]
         let chain = ChainMap.Chain.makeUnsafe(~chainId=10143)
         {
           InternalConfig.confirmedBlockThreshold: 200,
-          startBlock: 0,
+          startBlock: 39158500,
           id: 10143,
           contracts,
-          sources: NetworkSources.evm(~chain, ~contracts=[{name: "MonUSDC",events: [Types.MonUSDC.Transfer.register()],abi: Types.MonUSDC.abi}, {name: "DelegationManager",events: [Types.DelegationManager.EnabledDelegation.register(), Types.DelegationManager.RedeemedDelegation.register(), Types.DelegationManager.DisabledDelegation.register()],abi: Types.DelegationManager.abi}], ~hyperSync=None, ~allEventSignatures=[Types.MonUSDC.eventSignatures, Types.DelegationManager.eventSignatures]->Belt.Array.concatMany, ~shouldUseHypersyncClientDecoder=true, ~rpcs=[{url: "https://rpc.ankr.com/monad_testnet", sourceFor: Sync, syncConfig: {}}], ~lowercaseAddresses=false)
+          sources: NetworkSources.evm(~chain, ~contracts=[{name: "MonUSDC",events: [Types.MonUSDC.Transfer.register()],abi: Types.MonUSDC.abi}, {name: "DelegationManager",events: [Types.DelegationManager.RedeemedDelegation.register(), Types.DelegationManager.EnabledDelegation.register()],abi: Types.DelegationManager.abi}], ~hyperSync=Some("https://10143.hypersync.xyz"), ~allEventSignatures=[Types.MonUSDC.eventSignatures, Types.DelegationManager.eventSignatures]->Belt.Array.concatMany, ~shouldUseHypersyncClientDecoder=true, ~rpcs=[{url: "https://rpc.ankr.com/monad_testnet", sourceFor: Fallback, syncConfig: {}}], ~lowercaseAddresses=false)
         }
       },
     ]
@@ -72,7 +71,7 @@ let registerContractHandlers = (
       ~chains,
       ~enableRawEvents=false,
       ~batchSize=?Env.batchSize,
-      ~preloadHandlers=false,
+      ~preloadHandlers=true,
       ~lowercaseAddresses=false,
       ~shouldUseHypersyncClientDecoder=true,
     )

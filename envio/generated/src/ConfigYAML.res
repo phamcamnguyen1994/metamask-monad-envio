@@ -55,9 +55,8 @@ let publicConfig = ChainMap.fromArrayUnsafe([
             "0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
           ],
           events: [
-            Types.DelegationManager.EnabledDelegation.name,
             Types.DelegationManager.RedeemedDelegation.name,
-            Types.DelegationManager.DisabledDelegation.name,
+            Types.DelegationManager.EnabledDelegation.name,
           ],
         }
       ),
@@ -67,8 +66,8 @@ let publicConfig = ChainMap.fromArrayUnsafe([
       chain,
       {
         confirmedBlockThreshold: 200,
-        syncSource: Rpc({syncConfig: Config.getSyncConfig({})}),
-        startBlock: 0,
+        syncSource: HyperSync({endpointUrl: "https://10143.hypersync.xyz"}),
+        startBlock: 39158500,
         contracts,
         lowercaseAddresses: false
       }

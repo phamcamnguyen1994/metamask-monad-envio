@@ -1,8 +1,7 @@
   @genType
 module DelegationManager = {
-  module EnabledDelegation = Types.MakeRegister(Types.DelegationManager.EnabledDelegation)
   module RedeemedDelegation = Types.MakeRegister(Types.DelegationManager.RedeemedDelegation)
-  module DisabledDelegation = Types.MakeRegister(Types.DelegationManager.DisabledDelegation)
+  module EnabledDelegation = Types.MakeRegister(Types.DelegationManager.EnabledDelegation)
 }
 
   @genType
