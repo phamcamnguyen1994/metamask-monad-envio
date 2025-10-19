@@ -13,7 +13,7 @@ contracts:
 
 networks:
   - id: 10143
-    rpc: https://testnet-rpc.monad.xyz
+    rpc: https://rpc.ankr.com/monad_testnet
     start_block: 0
     contracts:
       - name: MonUSDC

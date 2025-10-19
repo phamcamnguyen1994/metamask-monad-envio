@@ -21,7 +21,7 @@ MonUSDC.Transfer.handler(async ({ event, context }) => {
     transactionHash: event.transaction.hash,
   };
 
-  context.Transfer.set(entity);
+  context.MonUSDC_Transfer.set(entity);
 });
 
 // Handler for DelegationManager EnabledDelegation events
@@ -37,7 +37,7 @@ DelegationManager.EnabledDelegation.handler(async ({ event, context }) => {
     status: "ACTIVE",
   };
 
-  context.Delegation.set(entity);
+  context.DelegationManager_EnabledDelegation.set(entity);
 });
 
 // Handler for DelegationManager RedeemedDelegation events
@@ -51,6 +51,6 @@ DelegationManager.RedeemedDelegation.handler(async ({ event, context }) => {
     transactionHash: event.transaction.hash,
   };
 
-  context.Redemption.set(entity);
+  context.DelegationManager_RedeemedDelegation.set(entity);
 });
 
