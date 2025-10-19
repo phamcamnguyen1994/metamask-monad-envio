@@ -98,14 +98,11 @@ const _queryTransfers = async (limit: number = 10) => {
       const { data, error } = await handleAsync(async () => {
         const q = /* GraphQL */ `
           query($limit: Int!) {
-            transfers(first: $limit, orderBy: blockTimestamp, orderDirection: desc) {
+            MUSDC_Transfer(limit: $limit, order_by: {id: desc}) {
               id
               from
               to
               value
-              blockTimestamp
-              transactionHash
-              blockNumber
             }
           }
         `;
@@ -121,7 +118,15 @@ const _queryTransfers = async (limit: number = 10) => {
         }
 
         const json = await res.json();
-        return json.data?.transfers || [];
+        const transfers = json.data?.MUSDC_Transfer || [];
+        
+        // Convert to expected format with mock timestamps
+        return transfers.map((t: any) => ({
+          ...t,
+          blockTimestamp: Math.floor(Date.now() / 1000).toString(),
+          transactionHash: t.id.split('_')[2] || '0x',
+          blockNumber: t.id.split('_')[1] || '0'
+        }));
       }, 'Failed to query Envio');
 
       if (data) {

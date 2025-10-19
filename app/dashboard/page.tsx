@@ -116,7 +116,7 @@ export default function Dashboard() {
         <div className="hero-heading">
           <h1 className="section-title">📊 Activity Dashboard</h1>
           <p className="section-subtitle">
-            Real-time monitoring of delegations, redemptions, and token transfers powered by Envio indexer
+            Real-time monitoring of mUSDC token transfers on Monad Testnet, powered by Envio HyperIndex
           </p>
         </div>
       </div>
