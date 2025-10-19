@@ -12,3 +12,9 @@ type MUSDC_Transfer {
   value: BigInt!
 }
 
+type DelegationManager_RedeemedDelegation {
+  id: ID!
+  rootDelegator: String!
+  redeemer: String!
+}
+

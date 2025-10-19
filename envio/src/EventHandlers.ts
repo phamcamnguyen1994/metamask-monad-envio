@@ -4,6 +4,7 @@
 import {
   DelegationManager,
   DelegationManager_EnabledDelegation,
+  DelegationManager_RedeemedDelegation,
   MUSDC,
   MUSDC_Transfer,
 } from "generated";
@@ -28,4 +29,14 @@ MUSDC.Transfer.handler(async ({ event, context }) => {
   };
 
   context.MUSDC_Transfer.set(entity);
+});
+
+DelegationManager.RedeemedDelegation.handler(async ({ event, context }) => {
+  const entity: DelegationManager_RedeemedDelegation = {
+    id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+    rootDelegator: event.params.rootDelegator,
+    redeemer: event.params.redeemer,
+  };
+
+  context.DelegationManager_RedeemedDelegation.set(entity);
 });

@@ -16,5 +16,6 @@ networks:
     handler: src/EventHandlers.ts
     events:
     - event: EnabledDelegation(bytes32 indexed delegationHash, address indexed delegator, address indexed delegate)
+    - event: RedeemedDelegation(address indexed rootDelegator, address indexed redeemer)
 unordered_multichain_mode: true
 preload_handlers: true
