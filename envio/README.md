@@ -1,68 +1,23 @@
-# Envio HyperIndex for MetaMask Delegation Platform
+## Envio Indexer
 
-Real-time blockchain indexer for tracking mUSDC transfers and delegation events on Monad testnet.
+*Please refer to the [documentation website](https://docs.envio.dev) for a thorough guide on all [Envio](https://envio.dev) indexer features*
 
-## 📦 What Gets Indexed
-
-### Contracts & Events
-
-| Contract | Address | Events | Purpose |
-|----------|---------|--------|---------|
-| **MonUSDC** | `0x3A13C20987Ac0e6840d9CB6e917085F72D17E698` | `Transfer` | Track mUSDC token transfers |
-| **DelegationManager** | `0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3` | `EnabledDelegation`<br>`RedeemedDelegation`<br>`DisabledDelegation` | Track delegation lifecycle |
-
-### Entities
-
-- **Transfer**: mUSDC token transfers
-- **Delegation**: Created delegations with metadata
-- **Redemption**: Delegation redemption history
-
-## 🚀 Quick Start
-
-### 1. Install Envio CLI
+### Run
 
 ```bash
-npm install -g envio
+pnpm dev
 ```
 
-### 2. Generate Code
+Visit http://localhost:8080 to see the GraphQL Playground, local password is `testing`.
+
+### Generate files from `config.yaml` or `schema.graphql`
 
 ```bash
-cd envio
-envio codegen
+pnpm codegen
 ```
 
-### 3. Run Locally
+### Pre-requisites
 
-```bash
-envio dev
-# GraphQL: http://localhost:8080/v1/graphql
-```
-
-### 4. Deploy to Cloud
-
-```bash
-envio deploy
-# Or connect via https://envio.dev/app
-```
-
-## 📂 Files
-
-- `config.yaml` - Envio configuration
-- `schema.graphql` - GraphQL schema definition
-- `src/EventHandlers.ts` - Event processing logic
-- `abis/MonUSDC.json` - mUSDC contract ABI
-- `abis/DelegationManager.json` - DelegationManager contract ABI
-
-## 📚 Documentation
-
-- [ENVIO_SETUP.md](./ENVIO_SETUP.md) - Detailed setup guide
-- [EVENTS_SUMMARY.md](./EVENTS_SUMMARY.md) - Events overview & queries
-
-## 🔗 Resources
-
-- **Envio Docs**: https://docs.envio.dev
-- **Dashboard**: https://envio.dev/app
-- **API Key**: https://envio.dev/api-key
-
-
+- [Node.js (use v18 or newer)](https://nodejs.org/en/download/current)
+- [pnpm (use v8 or newer)](https://pnpm.io/installation)
+- [Docker desktop](https://www.docker.com/products/docker-desktop/)

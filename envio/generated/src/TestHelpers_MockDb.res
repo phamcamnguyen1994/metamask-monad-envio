@@ -69,9 +69,8 @@ type rec t = {
 // Each user defined entity will be in this record with all the store or "mockdb" operators
 @genType
 and entities = {
-    @as("Delegation") delegation: entityStoreOperations<Entities.Delegation.t>,
-    @as("Redemption") redemption: entityStoreOperations<Entities.Redemption.t>,
-    @as("Transfer") transfer: entityStoreOperations<Entities.Transfer.t>,
+    @as("DelegationManager_EnabledDelegation") delegationManager_EnabledDelegation: entityStoreOperations<Entities.DelegationManager_EnabledDelegation.t>,
+    @as("MUSDC_Transfer") mUSDC_Transfer: entityStoreOperations<Entities.MUSDC_Transfer.t>,
   }
 // User defined entities always have a string for an id which is used as the
 // key for entity stores
@@ -284,43 +283,29 @@ let rec makeWithInMemoryStore: InMemoryStore.t => t = (inMemoryStore: InMemorySt
   )
 
   let entities = {
-      delegation: {
+      delegationManager_EnabledDelegation: {
         makeStoreOperatorEntity(
           ~inMemoryStore,
           ~makeMockDb=makeWithInMemoryStore,
           ~getStore=db => db->InMemoryStore.getInMemTable(
-            ~entityConfig=module(Entities.Delegation)->Entities.entityModToInternal,
+            ~entityConfig=module(Entities.DelegationManager_EnabledDelegation)->Entities.entityModToInternal,
           )->(
             Utils.magic: InMemoryTable.Entity.t<Internal.entity> => InMemoryTable.Entity.t<
-              Entities.Delegation.t,
+              Entities.DelegationManager_EnabledDelegation.t,
             >
           ),
           ~getKey=({id}) => id,
         )
       },
-      redemption: {
+      mUSDC_Transfer: {
         makeStoreOperatorEntity(
           ~inMemoryStore,
           ~makeMockDb=makeWithInMemoryStore,
           ~getStore=db => db->InMemoryStore.getInMemTable(
-            ~entityConfig=module(Entities.Redemption)->Entities.entityModToInternal,
+            ~entityConfig=module(Entities.MUSDC_Transfer)->Entities.entityModToInternal,
           )->(
             Utils.magic: InMemoryTable.Entity.t<Internal.entity> => InMemoryTable.Entity.t<
-              Entities.Redemption.t,
-            >
-          ),
-          ~getKey=({id}) => id,
-        )
-      },
-      transfer: {
-        makeStoreOperatorEntity(
-          ~inMemoryStore,
-          ~makeMockDb=makeWithInMemoryStore,
-          ~getStore=db => db->InMemoryStore.getInMemTable(
-            ~entityConfig=module(Entities.Transfer)->Entities.entityModToInternal,
-          )->(
-            Utils.magic: InMemoryTable.Entity.t<Internal.entity> => InMemoryTable.Entity.t<
-              Entities.Transfer.t,
+              Entities.MUSDC_Transfer.t,
             >
           ),
           ~getKey=({id}) => id,

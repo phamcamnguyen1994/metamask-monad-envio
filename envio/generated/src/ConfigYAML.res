@@ -34,15 +34,15 @@ let publicConfig = ChainMap.fromArrayUnsafe([
   {
     let contracts = Js.Dict.fromArray([
       (
-        "MonUSDC",
+        "MUSDC",
         {
-          name: "MonUSDC",
-          abi: Types.MonUSDC.abi,
+          name: "MUSDC",
+          abi: Types.MUSDC.abi,
           addresses: [
             "0x3A13C20987Ac0e6840d9CB6e917085F72D17E698",
           ],
           events: [
-            Types.MonUSDC.Transfer.name,
+            Types.MUSDC.Transfer.name,
           ],
         }
       ),
@@ -55,7 +55,6 @@ let publicConfig = ChainMap.fromArrayUnsafe([
             "0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
           ],
           events: [
-            Types.DelegationManager.RedeemedDelegation.name,
             Types.DelegationManager.EnabledDelegation.name,
           ],
         }

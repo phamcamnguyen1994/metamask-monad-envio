@@ -40,29 +40,21 @@ type whereOperations<'entity, 'fieldType> = {
   gt: 'fieldType => promise<array<'entity>>
 }
 
-module Delegation = {
-  let name = (Delegation :> string)
+module DelegationManager_EnabledDelegation = {
+  let name = (DelegationManager_EnabledDelegation :> string)
   @genType
   type t = {
-    blockNumber: bigint,
-    createdAt: bigint,
     delegate: string,
     delegationHash: string,
     delegator: string,
     id: id,
-    status: string,
-    transactionHash: string,
   }
 
   let schema = S.object((s): t => {
-    blockNumber: s.field("blockNumber", BigInt.schema),
-    createdAt: s.field("createdAt", BigInt.schema),
     delegate: s.field("delegate", S.string),
     delegationHash: s.field("delegationHash", S.string),
     delegator: s.field("delegator", S.string),
     id: s.field("id", S.string),
-    status: s.field("status", S.string),
-    transactionHash: s.field("transactionHash", S.string),
   })
 
   let rowsSchema = S.array(schema)
@@ -75,26 +67,6 @@ module Delegation = {
   let table = mkTable(
     (name :> string),
     ~fields=[
-      mkField(
-      "blockNumber", 
-      Numeric,
-      ~fieldSchema=BigInt.schema,
-      
-      
-      
-      
-      
-      ),
-      mkField(
-      "createdAt", 
-      Numeric,
-      ~fieldSchema=BigInt.schema,
-      
-      
-      
-      
-      
-      ),
       mkField(
       "delegate", 
       Text,
@@ -135,26 +107,6 @@ module Delegation = {
       
       
       ),
-      mkField(
-      "status", 
-      Text,
-      ~fieldSchema=S.string,
-      
-      
-      
-      
-      
-      ),
-      mkField(
-      "transactionHash", 
-      Text,
-      ~fieldSchema=S.string,
-      
-      
-      
-      
-      
-      ),
     ],
   )
 
@@ -163,125 +115,20 @@ module Delegation = {
   external castToInternal: t => Internal.entity = "%identity"
 }
 
-module Redemption = {
-  let name = (Redemption :> string)
+module MUSDC_Transfer = {
+  let name = (MUSDC_Transfer :> string)
   @genType
   type t = {
-    blockNumber: bigint,
-    blockTimestamp: bigint,
-    delegator: string,
-    id: id,
-    redeemer: string,
-    transactionHash: string,
-  }
-
-  let schema = S.object((s): t => {
-    blockNumber: s.field("blockNumber", BigInt.schema),
-    blockTimestamp: s.field("blockTimestamp", BigInt.schema),
-    delegator: s.field("delegator", S.string),
-    id: s.field("id", S.string),
-    redeemer: s.field("redeemer", S.string),
-    transactionHash: s.field("transactionHash", S.string),
-  })
-
-  let rowsSchema = S.array(schema)
-
-  @genType
-  type indexedFieldOperations = {
-    
-  }
-
-  let table = mkTable(
-    (name :> string),
-    ~fields=[
-      mkField(
-      "blockNumber", 
-      Numeric,
-      ~fieldSchema=BigInt.schema,
-      
-      
-      
-      
-      
-      ),
-      mkField(
-      "blockTimestamp", 
-      Numeric,
-      ~fieldSchema=BigInt.schema,
-      
-      
-      
-      
-      
-      ),
-      mkField(
-      "delegator", 
-      Text,
-      ~fieldSchema=S.string,
-      
-      
-      
-      
-      
-      ),
-      mkField(
-      "id", 
-      Text,
-      ~fieldSchema=S.string,
-      ~isPrimaryKey,
-      
-      
-      
-      
-      ),
-      mkField(
-      "redeemer", 
-      Text,
-      ~fieldSchema=S.string,
-      
-      
-      
-      
-      
-      ),
-      mkField(
-      "transactionHash", 
-      Text,
-      ~fieldSchema=S.string,
-      
-      
-      
-      
-      
-      ),
-    ],
-  )
-
-  let entityHistory = table->EntityHistory.fromTable(~schema)
-
-  external castToInternal: t => Internal.entity = "%identity"
-}
-
-module Transfer = {
-  let name = (Transfer :> string)
-  @genType
-  type t = {
-    blockNumber: bigint,
-    blockTimestamp: bigint,
     from: string,
     id: id,
     to: string,
-    transactionHash: string,
     value: bigint,
   }
 
   let schema = S.object((s): t => {
-    blockNumber: s.field("blockNumber", BigInt.schema),
-    blockTimestamp: s.field("blockTimestamp", BigInt.schema),
     from: s.field("from", S.string),
     id: s.field("id", S.string),
     to: s.field("to", S.string),
-    transactionHash: s.field("transactionHash", S.string),
     value: s.field("value", BigInt.schema),
   })
 
@@ -295,26 +142,6 @@ module Transfer = {
   let table = mkTable(
     (name :> string),
     ~fields=[
-      mkField(
-      "blockNumber", 
-      Numeric,
-      ~fieldSchema=BigInt.schema,
-      
-      
-      
-      
-      
-      ),
-      mkField(
-      "blockTimestamp", 
-      Numeric,
-      ~fieldSchema=BigInt.schema,
-      
-      
-      
-      
-      
-      ),
       mkField(
       "from", 
       Text,
@@ -346,16 +173,6 @@ module Transfer = {
       
       ),
       mkField(
-      "transactionHash", 
-      Text,
-      ~fieldSchema=S.string,
-      
-      
-      
-      
-      
-      ),
-      mkField(
       "value", 
       Numeric,
       ~fieldSchema=BigInt.schema,
@@ -374,9 +191,8 @@ module Transfer = {
 }
 
 let userEntities = [
-  module(Delegation),
-  module(Redemption),
-  module(Transfer),
+  module(DelegationManager_EnabledDelegation),
+  module(MUSDC_Transfer),
 ]->entityModsToInternal
 
 let allEntities =

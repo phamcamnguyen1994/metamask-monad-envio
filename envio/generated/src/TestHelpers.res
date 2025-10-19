@@ -143,48 +143,6 @@ module EventFunctions = {
 
 
 module DelegationManager = {
-  module RedeemedDelegation = {
-    @genType
-    let processEvent: EventFunctions.eventProcessor<Types.DelegationManager.RedeemedDelegation.event> = EventFunctions.makeEventProcessor(
-      ~register=(Types.DelegationManager.RedeemedDelegation.register :> unit => Internal.eventConfig),
-    )
-
-    @genType
-    type createMockArgs = {
-      @as("rootDelegator")
-      rootDelegator?: Address.t,
-      @as("redeemer")
-      redeemer?: Address.t,
-      @as("delegation")
-      delegation?: (Address.t, Address.t, string, array<(Address.t, string, string)>, bigint, string),
-      mockEventData?: EventFunctions.mockEventData,
-    }
-
-    @genType
-    let createMockEvent = args => {
-      let {
-        ?rootDelegator,
-        ?redeemer,
-        ?delegation,
-        ?mockEventData,
-      } = args
-
-      let params = 
-      {
-       rootDelegator: rootDelegator->Belt.Option.getWithDefault(TestHelpers_MockAddresses.defaultAddress),
-       redeemer: redeemer->Belt.Option.getWithDefault(TestHelpers_MockAddresses.defaultAddress),
-       delegation: delegation->Belt.Option.getWithDefault((TestHelpers_MockAddresses.defaultAddress, TestHelpers_MockAddresses.defaultAddress, "foo", [], 0n, "foo")),
-      }
-->(Utils.magic: Types.DelegationManager.RedeemedDelegation.eventArgs => Internal.eventParams)
-
-      EventFunctions.makeEventMocker(
-        ~params,
-        ~mockEventData,
-        ~register=(Types.DelegationManager.RedeemedDelegation.register :> unit => Internal.eventConfig),
-      )->(Utils.magic: Internal.event => Types.DelegationManager.RedeemedDelegation.event)
-    }
-  }
-
   module EnabledDelegation = {
     @genType
     let processEvent: EventFunctions.eventProcessor<Types.DelegationManager.EnabledDelegation.event> = EventFunctions.makeEventProcessor(
@@ -230,11 +188,11 @@ module DelegationManager = {
 }
 
 
-module MonUSDC = {
+module MUSDC = {
   module Transfer = {
     @genType
-    let processEvent: EventFunctions.eventProcessor<Types.MonUSDC.Transfer.event> = EventFunctions.makeEventProcessor(
-      ~register=(Types.MonUSDC.Transfer.register :> unit => Internal.eventConfig),
+    let processEvent: EventFunctions.eventProcessor<Types.MUSDC.Transfer.event> = EventFunctions.makeEventProcessor(
+      ~register=(Types.MUSDC.Transfer.register :> unit => Internal.eventConfig),
     )
 
     @genType
@@ -263,13 +221,13 @@ module MonUSDC = {
        to: to->Belt.Option.getWithDefault(TestHelpers_MockAddresses.defaultAddress),
        value: value->Belt.Option.getWithDefault(0n),
       }
-->(Utils.magic: Types.MonUSDC.Transfer.eventArgs => Internal.eventParams)
+->(Utils.magic: Types.MUSDC.Transfer.eventArgs => Internal.eventParams)
 
       EventFunctions.makeEventMocker(
         ~params,
         ~mockEventData,
-        ~register=(Types.MonUSDC.Transfer.register :> unit => Internal.eventConfig),
-      )->(Utils.magic: Internal.event => Types.MonUSDC.Transfer.event)
+        ~register=(Types.MUSDC.Transfer.register :> unit => Internal.eventConfig),
+      )->(Utils.magic: Internal.event => Types.MUSDC.Transfer.event)
     }
   }
 

@@ -1,26 +1,20 @@
-name: metamask-monad-indexer
-contracts:
-  - name: MonUSDC
-    handler: src/EventHandlers.ts
-    events:
-      - event: Transfer(address indexed from, address indexed to, uint256 value)
-  
-  - name: DelegationManager
-    handler: src/EventHandlers.ts
-    events:
-      # TẠM TẮT event này vì signature đang lỗi:
-      # - event: RedeemedDelegation(address indexed rootDelegator,...dress,bytes32,(address,bytes,bytes)[],uint256,bytes) delegation)
-      - event: EnabledDelegation(bytes32 indexed delegationHash, address indexed delegator, address indexed delegate)
-
+# yaml-language-server: $schema=./node_modules/envio/evm.schema.json
+name: enviomonad
 networks:
-  - id: 10143
-    rpc: https://rpc.ankr.com/monad_testnet
-    start_block: 0
-    contracts:
-      - name: MonUSDC
-        address: 0x3A13C20987Ac0e6840d9CB6e917085F72D17E698
-        start_block: 0
-      
-      - name: DelegationManager
-        address: 0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3
-        start_block: 0
+- id: 10143
+  start_block: 0
+  contracts:
+  - name: mUSDC
+    address:
+    - 0x3A13C20987Ac0e6840d9CB6e917085F72D17E698
+    handler: src/EventHandlers.ts
+    events:
+    - event: Transfer(address indexed from, address indexed to, uint256 value)
+  - name: DelegationManager
+    address:
+    - 0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3
+    handler: src/EventHandlers.ts
+    events:
+    - event: EnabledDelegation(bytes32 indexed delegationHash, address indexed delegator, address indexed delegate)
+unordered_multichain_mode: true
+preload_handlers: true

@@ -2,12 +2,12 @@ module ContractType = {
   @genType
   type t = 
     | @as("DelegationManager") DelegationManager
-    | @as("MonUSDC") MonUSDC
+    | @as("MUSDC") MUSDC
 
   let name = "CONTRACT_TYPE"
   let variants = [
     DelegationManager,
-    MonUSDC,
+    MUSDC,
   ]
   let config = Internal.makeEnumConfig(~name, ~variants)
 }
@@ -15,16 +15,14 @@ module ContractType = {
 module EntityType = {
   @genType
   type t = 
-    | @as("Delegation") Delegation
-    | @as("Redemption") Redemption
-    | @as("Transfer") Transfer
+    | @as("DelegationManager_EnabledDelegation") DelegationManager_EnabledDelegation
+    | @as("MUSDC_Transfer") MUSDC_Transfer
     | @as("dynamic_contract_registry") DynamicContractRegistry
 
   let name = "ENTITY_TYPE"
   let variants = [
-    Delegation,
-    Redemption,
-    Transfer,
+    DelegationManager_EnabledDelegation,
+    MUSDC_Transfer,
     DynamicContractRegistry,
   ]
   let config = Internal.makeEnumConfig(~name, ~variants)

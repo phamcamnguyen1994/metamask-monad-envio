@@ -1,19 +1,19 @@
 export {
   DelegationManager,
-  MonUSDC,
+  MUSDC,
   onBlock
 } from "./src/Handlers.gen";
 export type * from "./src/Types.gen";
 import {
   DelegationManager,
-  MonUSDC,
+  MUSDC,
   MockDb,
   Addresses 
 } from "./src/TestHelpers.gen";
 
 export const TestHelpers = {
   DelegationManager,
-  MonUSDC,
+  MUSDC,
   MockDb,
   Addresses 
 };

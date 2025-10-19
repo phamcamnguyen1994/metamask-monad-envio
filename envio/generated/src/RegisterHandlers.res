@@ -28,14 +28,14 @@ let registerContractHandlers = (
       {
         let contracts = [
           {
-            InternalConfig.name: "MonUSDC",
-            abi: Types.MonUSDC.abi,
+            InternalConfig.name: "MUSDC",
+            abi: Types.MUSDC.abi,
             addresses: [
               "0x3A13C20987Ac0e6840d9CB6e917085F72D17E698"->Address.Evm.fromStringOrThrow
 ,
             ],
             events: [
-              (Types.MonUSDC.Transfer.register() :> Internal.eventConfig),
+              (Types.MUSDC.Transfer.register() :> Internal.eventConfig),
             ],
             startBlock: None,
           },
@@ -47,7 +47,6 @@ let registerContractHandlers = (
 ,
             ],
             events: [
-              (Types.DelegationManager.RedeemedDelegation.register() :> Internal.eventConfig),
               (Types.DelegationManager.EnabledDelegation.register() :> Internal.eventConfig),
             ],
             startBlock: None,
@@ -59,7 +58,7 @@ let registerContractHandlers = (
           startBlock: 0,
           id: 10143,
           contracts,
-          sources: NetworkSources.evm(~chain, ~contracts=[{name: "MonUSDC",events: [Types.MonUSDC.Transfer.register()],abi: Types.MonUSDC.abi}, {name: "DelegationManager",events: [Types.DelegationManager.RedeemedDelegation.register(), Types.DelegationManager.EnabledDelegation.register()],abi: Types.DelegationManager.abi}], ~hyperSync=Some("https://10143.hypersync.xyz"), ~allEventSignatures=[Types.MonUSDC.eventSignatures, Types.DelegationManager.eventSignatures]->Belt.Array.concatMany, ~shouldUseHypersyncClientDecoder=true, ~rpcs=[{url: "https://rpc.ankr.com/monad_testnet", sourceFor: Fallback, syncConfig: {}}], ~lowercaseAddresses=false)
+          sources: NetworkSources.evm(~chain, ~contracts=[{name: "MUSDC",events: [Types.MUSDC.Transfer.register()],abi: Types.MUSDC.abi}, {name: "DelegationManager",events: [Types.DelegationManager.EnabledDelegation.register()],abi: Types.DelegationManager.abi}], ~hyperSync=Some("https://10143.hypersync.xyz"), ~allEventSignatures=[Types.MUSDC.eventSignatures, Types.DelegationManager.eventSignatures]->Belt.Array.concatMany, ~shouldUseHypersyncClientDecoder=true, ~rpcs=[], ~lowercaseAddresses=false)
         }
       },
     ]
@@ -67,11 +66,11 @@ let registerContractHandlers = (
     Config.make(
       ~shouldRollbackOnReorg=true,
       ~shouldSaveFullHistory=false,
-      ~isUnorderedMultichainMode=false,
+      ~isUnorderedMultichainMode=true,
       ~chains,
       ~enableRawEvents=false,
       ~batchSize=?Env.batchSize,
-      ~preloadHandlers=false,
+      ~preloadHandlers=true,
       ~lowercaseAddresses=false,
       ~shouldUseHypersyncClientDecoder=true,
     )
@@ -94,7 +93,7 @@ let registerAllHandlers = () => {
     ~handlerPathRelativeToConfig="src/EventHandlers.ts",
   )
   registerContractHandlers(
-    ~contractName="MonUSDC",
+    ~contractName="MUSDC",
     ~handlerPathRelativeToRoot="src/EventHandlers.ts",
     ~handlerPathRelativeToConfig="src/EventHandlers.ts",
   )

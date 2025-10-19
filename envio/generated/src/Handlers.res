@@ -1,12 +1,11 @@
   @genType
 module DelegationManager = {
-  module RedeemedDelegation = Types.MakeRegister(Types.DelegationManager.RedeemedDelegation)
   module EnabledDelegation = Types.MakeRegister(Types.DelegationManager.EnabledDelegation)
 }
 
   @genType
-module MonUSDC = {
-  module Transfer = Types.MakeRegister(Types.MonUSDC.Transfer)
+module MUSDC = {
+  module Transfer = Types.MakeRegister(Types.MUSDC.Transfer)
 }
 
 @genType /** Register a Block Handler. It'll be called for every block by default. */
