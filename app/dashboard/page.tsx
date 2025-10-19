@@ -23,11 +23,6 @@ export default function Dashboard() {
   const [transfers, setTransfers] = useState<Transfer[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<Tab>("all");
-  const [stats, setStats] = useState({
-    totalTransfers: 0,
-    totalDelegations: 0,
-    totalVolume: 0,
-  });
 
   // Use connected account or fallback to demo address
   const userAddress = smartAccount?.address || account || "0x1bd5aCb8069DA1051911eB80A37723aA1ce5919C" as `0x${string}`;
@@ -44,31 +39,6 @@ export default function Dashboard() {
           setTransfers([]);
         }
 
-        // Calculate stats from localStorage + transfers
-        const storedDelegations = JSON.parse(localStorage.getItem("delegations") || "[]");
-        const storedRedemptions = JSON.parse(localStorage.getItem("redemptionHistory") || "[]");
-        
-        // Filter data for current user
-        const userDelegations = storedDelegations.filter(
-          (d: any) =>
-            d.delegator?.toLowerCase() === userAddress.toLowerCase() ||
-            d.delegate?.toLowerCase() === userAddress.toLowerCase()
-        );
-        
-        const userRedemptions = storedRedemptions.filter(
-          (r: any) =>
-            r.delegator?.toLowerCase() === userAddress.toLowerCase() ||
-            r.delegate?.toLowerCase() === userAddress.toLowerCase()
-        );
-        
-        // Calculate volume from redemptions
-        const totalVolume = userRedemptions.reduce((sum: number, r: any) => sum + Number(r.amount || 0), 0);
-        
-        setStats({
-          totalTransfers: transfers.length,
-          totalDelegations: userDelegations.length,
-          totalVolume,
-        });
       } catch (error) {
         console.error("Failed to load data:", error);
       } finally {
@@ -121,40 +91,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Stats Cards */}
-      <div className="page-section">
-        <div className="stats-grid">
-          <div className="card card--accent">
-            <div className="stat-card">
-              <div className="stat-card__icon">📈</div>
-              <div className="stat-card__content">
-                <div className="stat-card__value">{stats.totalTransfers}</div>
-                <div className="stat-card__label">Total Transfers</div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="card card--warning">
-            <div className="stat-card">
-              <div className="stat-card__icon">🔄</div>
-              <div className="stat-card__content">
-                <div className="stat-card__value">{stats.totalDelegations}</div>
-                <div className="stat-card__label">Active Delegations</div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="card card--info">
-            <div className="stat-card">
-              <div className="stat-card__icon">💎</div>
-              <div className="stat-card__content">
-                <div className="stat-card__value">{stats.totalVolume.toFixed(2)}</div>
-                <div className="stat-card__label">Total Volume (mUSDC)</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* Delegation & Redemption Feed Section */}
       <div className="page-section">
